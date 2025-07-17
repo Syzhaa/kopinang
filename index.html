@@ -799,10 +799,21 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
             updateAllUI();
-            
-            document.getElementById('date').valueAsDate = new Date();
-            document.getElementById('materialDate').valueAsDate = new Date();
-            
+
+            // Set default date ke WITA (UTC+8)
+            function setDateWITA(inputId) {
+                const now = new Date();
+                // Hitung offset WITA (UTC+8)
+                const witaOffset = 8 * 60; // menit
+                const localOffset = now.getTimezoneOffset(); // menit
+                // Koreksi waktu ke WITA
+                const witaTime = new Date(now.getTime() + (witaOffset + localOffset) * 60000);
+                document.getElementById(inputId).value = witaTime.toISOString().slice(0, 10);
+            }
+
+            setDateWITA('date');
+            setDateWITA('materialDate');
+
             document.getElementById('menuSelect').addEventListener('change', updateSelectedMenuPrice);
             document.getElementById('quantity').addEventListener('input', calculateTotal);
             document.getElementById('selectedMenuPrice').addEventListener('input', calculateTotal);
