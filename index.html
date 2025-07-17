@@ -381,7 +381,7 @@
                 const option = document.createElement('option');
                 option.value = menu.id;
                 option.textContent = `${menu.name} - ${formatCurrency(menu.price)}`;
-                option.dataset.price = menu.price;
+                option.dataset.price = menu.price; // <-- pastikan ini ada
                 option.dataset.name = menu.name;
                 select.appendChild(option);
             });
@@ -587,7 +587,11 @@
             const select = document.getElementById('menuSelect');
             const selectedOption = select.options[select.selectedIndex];
             const priceInput = document.getElementById('selectedMenuPrice');
-            priceInput.value = selectedOption.value ? selectedOption.dataset.price : '';
+            if (selectedOption && selectedOption.dataset.price) {
+                priceInput.value = selectedOption.dataset.price;
+            } else {
+                priceInput.value = '';
+            }
             calculateTotal();
         }
 
@@ -808,7 +812,7 @@
                 document.getElementById(inputId).value = witaTime.toISOString().slice(0, 10);
             }
 
-            setDateWITA('date');g
+            setDateWITA('date');
             setDateWITA('materialDate');
 
             document.getElementById('menuSelect').addEventListener('change', updateSelectedMenuPrice);
