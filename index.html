@@ -803,15 +803,12 @@
             // Set default date ke WITA (UTC+8)
             function setDateWITA(inputId) {
                 const now = new Date();
-                // Hitung offset WITA (UTC+8)
-                const witaOffset = 8 * 60; // menit
-                const localOffset = now.getTimezoneOffset(); // menit
-                // Koreksi waktu ke WITA
-                const witaTime = new Date(now.getTime() + (witaOffset + localOffset) * 60000);
+                // Dapatkan waktu UTC, lalu tambahkan 8 jam (WITA)
+                const witaTime = new Date(now.getTime() + (8 * 60 * 60 * 1000) - (now.getTimezoneOffset() * 60 * 1000));
                 document.getElementById(inputId).value = witaTime.toISOString().slice(0, 10);
             }
 
-            setDateWITA('date');
+            setDateWITA('date');g
             setDateWITA('materialDate');
 
             document.getElementById('menuSelect').addEventListener('change', updateSelectedMenuPrice);
